@@ -32,13 +32,25 @@ def ingest_data():
     df.reset_index(inplace=True, drop=True)
     
     # Corregimos la columna de principales_palabras_clave
-    # Concatenamos las palabras clave si la columna 'cluster' es NaN
-    for i in range(1, len(df)):
-        if pd.isna(df.loc[i, 'cluster']):
-            df.loc[i, 'principales_palabras_clave'] = df.loc[i - 1, 'principales_palabras_clave'] + ' ' + df.loc[i, 'principales_palabras_clave']
+    df.iloc[23,3] = df.iloc[23,3] + '.'
+    columna = list(df.iloc[:,3]).copy()
+    nueva_columna = []
+    temp_str = ""
+
+    for item in columna:
+        if temp_str:         # Añadir el elemento actual a la cadena temporal
+            temp_str += ', ' + item.strip()
+        else:
+            temp_str = item.strip()
+        
+        # Si el elemento actual termina en un punto, añadir a la nueva lista y resetear la cadena temporal
+        if item.endswith('.'):
+            nueva_columna.append(temp_str)
+            temp_str = ""  # Resetear para el próximo grupo
 
     # Filtramos solo las filas donde 'cluster' no es NaN
     df = df[df['cluster'].notna()]
+    df['principales_palabras_clave'] = nueva_columna
     
     # Eliminamos los dobles espacios
     df['principales_palabras_clave'] = df['principales_palabras_clave'].str.replace('   ', ' ').str.replace('  ', ' ')
@@ -52,3 +64,5 @@ def ingest_data():
     df['porcentaje_de_palabras_clave'] = df['porcentaje_de_palabras_clave'].str.replace(' %', '').str.replace(",",".").astype(float)
     
     return df
+# Guardamos el df en un txt
+print(ingest_data())
