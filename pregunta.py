@@ -53,7 +53,7 @@ def ingest_data():
     df['principales_palabras_clave'] = nueva_columna
     
     # Eliminamos los dobles espacios
-    df['principales_palabras_clave'] = df['principales_palabras_clave'].str.replace('   ', ' ').str.replace('  ', ' ').str.replace(',,', ',').str.replace('.', '')
+    df['principales_palabras_clave'] = df['principales_palabras_clave'].str.replace('    ', ' ').str.replace('   ', ' ').str.replace('  ', ' ').str.replace(',,', ',').str.replace('.', '')
     df.reset_index(inplace=True, drop=True)
     
     # Convertimos las columnas cluster y cantidad_de_palabras_clave a numéricas
@@ -64,5 +64,3 @@ def ingest_data():
     df['porcentaje_de_palabras_clave'] = df['porcentaje_de_palabras_clave'].str.replace(' %', '').str.replace(",",".").astype(float)
     
     return df
-
-print(ingest_data())
