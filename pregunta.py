@@ -44,6 +44,11 @@ def ingest_data():
     df['principales_palabras_clave'] = df['principales_palabras_clave'].str.replace('   ', ' ').str.replace('  ', ' ')
     df.reset_index(inplace=True, drop=True)
     
+    # Convertimos las columnas cluster y cantidad_de_palabras_clave a numéricas
+    df['cluster'] = df['cluster'].astype(int)
+    df['cantidad_de_palabras_clave'] = df['cantidad_de_palabras_clave'].astype(int)
+    
+    # De la columna porcentaje_de_palabras_clave removemos de todos los registros el " %" y convertimos a float
+    df['porcentaje_de_palabras_clave'] = df['porcentaje_de_palabras_clave'].str.replace(' %', '').str.replace(",",".").astype(float)
+    
     return df
-
-print(ingest_data())
