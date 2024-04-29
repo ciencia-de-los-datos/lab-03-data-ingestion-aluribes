@@ -21,7 +21,7 @@ import pandas as pd
 def ingest_data():
 
     # Leemos el archivo como ancho fijo
-    df = pd.read_fwf("clusters_report.txt",widths=[9, 16, 16, 76])
+    df = pd.read_fwf("clusters_report.txt",widths=[9, 16, 16, 77])
     
     # Corregimos los nombres de las columnas
     df.columns = df.columns + " " + list(df.iloc[0])
@@ -39,9 +39,9 @@ def ingest_data():
 
     for item in columna:
         if temp_str:         # Añadir el elemento actual a la cadena temporal
-            temp_str += ' ' + item.strip()
+            temp_str += ' ' + item
         else:
-            temp_str = item.strip()
+            temp_str = item
         
         # Si el elemento actual termina en un punto, añadir a la nueva lista y resetear la cadena temporal
         if item.endswith('.'):
@@ -65,4 +65,4 @@ def ingest_data():
     
     return df
 
-#print(ingest_data().principales_palabras_clave.to_list()[0])
+print(ingest_data())
