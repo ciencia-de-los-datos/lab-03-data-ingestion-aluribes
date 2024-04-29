@@ -39,7 +39,7 @@ def ingest_data():
 
     for item in columna:
         if temp_str:         # Añadir el elemento actual a la cadena temporal
-            temp_str += ', ' + item.strip()
+            temp_str += ' ' + item.strip()
         else:
             temp_str = item.strip()
         
@@ -65,4 +65,4 @@ def ingest_data():
     
     return df
 
-#print(ingest_data())
+#print(ingest_data().principales_palabras_clave.to_list()[0])
